@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import RoundSlider from './Components/RoundSlider/RoundSLider';
 import SliderS from './Components/Slider/SliderS';
 

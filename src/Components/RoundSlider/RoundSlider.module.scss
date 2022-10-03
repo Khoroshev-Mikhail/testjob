@@ -1,5 +1,11 @@
 $round: 530px;
 $roundTop: 215px;
+
+$large: 1100px;
+$medium: 980px;
+$small: 700px;
+$micro: 580px;
+
 .circle{
     border-radius: 50%;
     -moz-border-radius: 50%;
@@ -12,22 +18,54 @@ $roundTop: 215px;
     width: 100%;
     min-height: calc($round + $roundTop + 96px);
     box-sizing: border-box;
-    .date{
+    @media (max-width: $micro) {
+        min-height: 300px;
+    } 
+    .date{        
         z-index: 3;
         font-size: 200px;
         font-weight: 700;
         position: absolute;
-        top: calc($round / 2 - 125px + $roundTop)
+        line-height: 200px;
+        top: calc($round / 2 + $roundTop - 120px );
+        @media (max-width: $large) {
+            font-size: 11em;
+        } 
+        @media (max-width: $medium) {
+            font-size: 8em;
+        } 
+        @media (max-width: $small) {
+            font-size: 6.5em;
+        } 
+        @media (max-width: $micro) {
+            top: 163px;
+            font-size: 56px;
+            line-height: 56px;
+        } 
     }
     .leftDate{
         margin: 0px;
         padding: 0px;
         color: #5D5FEF;
-        right: calc(50% + 50px);
+        right: calc(50% + 50px);        
+        @media (max-width: $medium) {
+            right: calc(50% + 30px); 
+        } 
+        @media (max-width: $micro) {
+            left: 20px;
+            text-align: left;
+        } 
     }
     .rightDate{
         color: #EF5DA8;
-        left: calc(50% + 50px);
+        left: calc(50% + 50px);        
+        @media (max-width: $medium) {
+            left: calc(50% + 30px); 
+        } 
+        @media (max-width: $micro) {
+            right: 20px;
+            text-align: right;
+        } 
     }
 
     .roundContainer__round{
@@ -39,7 +77,18 @@ $roundTop: 215px;
         top: $roundTop;
         left: calc(50% - $round / 2);
         background: none;
-
+        @media (max-width: $large) {
+            font-size: 11em;
+        } 
+        @media (max-width: $medium) {
+            font-size: 8em;
+        } 
+        @media (max-width: $small) {
+            font-size: 6.5em;
+        } 
+        @media (max-width: $micro) {
+            display: none;
+        } 
         .activePoints{
             z-index: 7;
             width: 56px;
@@ -72,7 +121,15 @@ $roundTop: 215px;
         padding-left: 80px;
         top: 170px;
         text-align: left;
-        -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#5D5FEF), to(#EF5DA8))0 0 0 100% stretch;
+        color: #42567A;
+        -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#5D5FEF), to(#EF5DA8)) 0 0 0 100% stretch;
+        @media (max-width: $micro) {
+            top: 59px;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
+            padding-left: 0px;
+        } 
     }
     .roundContainer__buttons{
         position: absolute;
@@ -80,18 +137,25 @@ $roundTop: 215px;
         top: 697px;
         text-align: left;
         color: #42567A;
+        z-index: 999;
+        @media (max-width: $micro) {
+            top: auto;
+            bottom: 13px;
+            padding: 0px;
+        } 
         div{
             margin-bottom: 20px;
             font-size: 14px;
             font-weight: 400;
         }
         button{
+            box-sizing: border-box;
             width: 50px;
             height: 50px;
             font-size: 20px;
             margin-right: 20px;
-            cursor: pointer;
             z-index: 6;
+            cursor: pointer;
         }
     }
     .roundContainer__borderHorizont{
@@ -103,6 +167,9 @@ $roundTop: 215px;
         left: 0px;
         top: calc($round / 2 + $roundTop);
         border-bottom: 1px solid rgba(66, 87, 122, 0.2);
+        @media (max-width: $micro) {
+            top: 293px;
+        } 
     }
     .roundContainer__borderVertical{
         z-index: 2;
@@ -114,6 +181,9 @@ $roundTop: 215px;
         min-height: calc($round + $roundTop + 96px);
         height: 100%;
         border-right: 1px solid rgba(66, 87, 122, 0.2);
+        @media (max-width: $micro) {
+            display: none;
+        } 
     }
 }
 

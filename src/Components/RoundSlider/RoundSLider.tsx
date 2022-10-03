@@ -27,15 +27,32 @@ export default function RoundSlider(){
                 <button className={`${css.circle}`} onClick={prevFn}>{`<`}</button>
                 <button className={`${css.circle}`} onClick={nextFn}>{`>`}</button>
             </div>
-            <div className={`${css.leftDate} ${css.date}`}>2015</div>
-            <div className={`${css.rightDate} ${css.date}`}>2022</div>
-            <div className={`${css.roundContainer__round} ${css.circle}`} id="round">
+            <div className={`${css.leftDate} ${css.date}`}>{data[index].start}</div>
+            <div className={`${css.rightDate} ${css.date}`}>{data[index].end}</div>
+            <div className={`${css.roundContainer__round} ${css.circle} `} id="round">
                 <div className={css.cell}></div>
                
                 {data.map((el, i, arr) => {
                     return (
                         <div>
-                            <div onClick={()=>rotating(i)} className={`${css.circle} ${css.activePoints}`} style={{rotate: `${i * 360 / arr.length + 360 / arr.length / 2}deg`}}>{i}</div>
+                            <div 
+                                id={`point${i}`} 
+                                onMouseOver={()=>{
+                                    document.getElementById(`point${i}`)?.classList.add(css.activePoints)
+                                    document.getElementById(`point${i}`)?.classList.remove(css.points)
+                                }} 
+                                onMouseLeave={()=>{
+                                    if(i !== index){
+                                        document.getElementById(`point${i}`)?.classList.add(css.points)
+                                        document.getElementById(`point${i}`)?.classList.remove(css.activePoints)
+                                    }
+                                }}
+                                onClick={()=>rotating(i)} 
+                                className={`${css.circle} ${ i === index ? css.activePoints : css.points}`} 
+                                style={{rotate: `${i * 360 / arr.length + 360 / arr.length / 2}deg`}}
+                            >
+                                {i}
+                            </div>
                         </div>
                     )
                 })}

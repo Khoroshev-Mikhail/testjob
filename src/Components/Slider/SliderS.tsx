@@ -19,7 +19,7 @@ export default function SliderS(){
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={40}
-                slidesPerView={3}
+                slidesPerView={document.documentElement.clientWidth > 580 ? 3 : 2} //При ресайзе не перегружается динамически, но это и не обязательно
                 navigation={true}
                 //onSwiper={(swiper) => console.log(swiper)}
                 //onSlideChange={() => console.log('slide change')}
@@ -28,7 +28,7 @@ export default function SliderS(){
                     return (
                         <SwiperSlide className={css.slide} key={id+i}>
                             <div className={css.header}>{slide.header}</div>
-                            <div className={css.description}>{slide.description}</div>
+                            <div className={css.description} style={{height: (document.documentElement.clientHeight - 520) + 'px'}}>{slide.description}</div>
                         </SwiperSlide>
                     )
                 })}

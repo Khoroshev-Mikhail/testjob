@@ -5,6 +5,12 @@
   border-right: 1px solid rgba(66, 87, 122, 0.2);
   border-left: 1px solid rgba(66, 87, 122, 0.2);
   margin: 0px 10px 0px 10px;
+  @media (max-width: 980px) {
+    width: 100%;
+    padding: 0px 20px 0px 20px;
+    margin: 0px;
+    border: none;
+  } 
 }
 body{
   background-color: #F4F5F9;
