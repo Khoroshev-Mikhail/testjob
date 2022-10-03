@@ -1,0 +1,119 @@
+$round: 530px;
+$roundTop: 215px;
+.circle{
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border: 1px solid rgba(66, 87, 122, 0.2);
+    background-color: #F4F5F9;
+}
+.roundContainer{
+    width: 100%;
+    min-height: calc($round + $roundTop + 96px);
+    box-sizing: border-box;
+    .date{
+        z-index: 3;
+        font-size: 200px;
+        font-weight: 700;
+        position: absolute;
+        top: calc($round / 2 - 125px + $roundTop)
+    }
+    .leftDate{
+        margin: 0px;
+        padding: 0px;
+        color: #5D5FEF;
+        right: calc(50% + 50px);
+    }
+    .rightDate{
+        color: #EF5DA8;
+        left: calc(50% + 50px);
+    }
+
+    .roundContainer__round{
+        z-index: 4;
+        box-sizing: border-box;
+        width: $round;
+        height: $round;
+        position: absolute;
+        top: $roundTop;
+        left: calc(50% - $round / 2);
+        background: none;
+
+        .activePoints{
+            z-index: 7;
+            width: 56px;
+            height: 56px;
+            box-sizing: border-box;
+            position: absolute;
+            top: -28px;
+            left: 237px;
+            transform-origin: 28px 293px;
+            font-size: 20px;
+            line-height: 52px;
+            cursor: pointer;
+        }
+        .points{
+            z-index: 7;
+            width: 6px;
+            height: 6px;
+            box-sizing: border-box;
+            position: absolute;
+            top: -3px;
+            left: 261.5px;
+            transform-origin: 3px 267.5px;
+            font-size: 0px;
+            cursor: pointer;
+            background: #42567A;
+        }
+    }
+    .roundContainer__header{
+        position: relative;
+        padding-left: 80px;
+        top: 170px;
+        text-align: left;
+        -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#5D5FEF), to(#EF5DA8))0 0 0 100% stretch;
+    }
+    .roundContainer__buttons{
+        position: absolute;
+        padding-left: 80px;
+        top: 697px;
+        text-align: left;
+        color: #42567A;
+        div{
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        button{
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            margin-right: 20px;
+            cursor: pointer;
+            z-index: 6;
+        }
+    }
+    .roundContainer__borderHorizont{
+        z-index: 2;
+        position: absolute;
+        box-sizing: border-box;  
+        width: 100%;
+        height: 1px;
+        left: 0px;
+        top: calc($round / 2 + $roundTop);
+        border-bottom: 1px solid rgba(66, 87, 122, 0.2);
+    }
+    .roundContainer__borderVertical{
+        z-index: 2;
+        box-sizing: border-box;  
+        position: absolute;
+        left: calc(50% - 0.5px);
+        top: 0px;
+        width: 1px;
+        min-height: calc($round + $roundTop + 96px);
+        height: 100%;
+        border-right: 1px solid rgba(66, 87, 122, 0.2);
+    }
+}
+
