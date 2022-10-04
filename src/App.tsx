@@ -1,12 +1,12 @@
 import './App.scss';
 import RoundSlider from './Components/RoundSlider/RoundSLider';
-import SliderS from './Components/Slider/SliderS';
+import Slider from './Components/Slider/Slider';
 
 function App() {
   return (
     <div className="App">
       <RoundSlider />
-      <SliderS />
+      <Slider />
     </div>
   );
 }

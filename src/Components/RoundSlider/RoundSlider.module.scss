@@ -58,7 +58,7 @@ $micro: 580px;
     }
     .rightDate{
         color: #EF5DA8;
-        left: calc(50% + 50px);        
+        left: calc(50% + 50px);    
         @media (max-width: $medium) {
             left: calc(50% + 30px); 
         } 
@@ -67,7 +67,17 @@ $micro: 580px;
             text-align: right;
         } 
     }
-
+    .miniHeader{
+        position: absolute;
+        left: calc(50% + $round / 4 + 70px);
+        top: calc($roundTop + 35px);;
+        z-index: 999;
+        font-size: 20px;
+        font-weight: 700;
+        @media (max-width: $micro) {
+            display: none;
+        } 
+    }
     .roundContainer__round{
         z-index: 4;
         box-sizing: border-box;
@@ -122,13 +132,33 @@ $micro: 580px;
         top: 170px;
         text-align: left;
         color: #42567A;
+        font-size: 56px;
+        line-height: 67.2px;
+        font-weight: 700;
+        border-width: 5px;
+        border-style: solid;
+        border-image: 
+            linear-gradient(
+            to bottom, 
+            #5D5FEF, 
+            #EF5DA8(0, 0, 0, 0)
+            ) 1 100%;
         -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#5D5FEF), to(#EF5DA8)) 0 0 0 100% stretch;
+        @media (max-width: $medium) {
+            font-size: 45px;
+            line-height: 45px;
+        } 
+        @media (max-width: $small) {
+            font-size: 40px;
+            line-height: 40px;
+        }     
         @media (max-width: $micro) {
             top: 59px;
             font-size: 20px;
             font-weight: 700;
             line-height: 24px;
             padding-left: 0px;
+            border: none;
         } 
     }
     .roundContainer__buttons{

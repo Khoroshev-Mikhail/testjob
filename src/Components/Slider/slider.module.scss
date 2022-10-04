@@ -17,8 +17,24 @@ $micro: 580px;
     padding-bottom: 15px;
 }
 .description{
+    font-size: 20px;
     height: auto;
     @media (max-width: $micro) {
+        font-size: 14px;
         text-overflow: ellipsis;
     }
+}
+.swiper-button-disabled{
+    display: none;
+}
+.circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border: 1px solid rgba(66, 87, 122, 0.2);
+    background-color: #ffffff;
 }
