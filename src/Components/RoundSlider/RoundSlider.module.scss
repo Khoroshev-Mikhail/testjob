@@ -74,6 +74,7 @@ $micro: 580px;
         z-index: 999;
         font-size: 20px;
         font-weight: 700;
+        opacity: 0;
         @media (max-width: $micro) {
             display: none;
         } 
@@ -111,6 +112,7 @@ $micro: 580px;
             font-size: 20px;
             line-height: 52px;
             cursor: pointer;
+            transition: 0.333s;
         }
         .points{
             z-index: 7;
@@ -124,6 +126,7 @@ $micro: 580px;
             font-size: 0px;
             cursor: pointer;
             background: #42567A;
+            transition: 0.333s;
         }
     }
     .roundContainer__header{
@@ -177,6 +180,9 @@ $micro: 580px;
             margin-bottom: 20px;
             font-size: 14px;
             font-weight: 400;
+            @media (max-width: $micro) {
+                margin-bottom: 10px;
+            } 
         }
         button{
             box-sizing: border-box;
@@ -186,6 +192,12 @@ $micro: 580px;
             margin-right: 20px;
             z-index: 6;
             cursor: pointer;
+            @media (max-width: $micro) {
+                font-size: 14px;
+                width: 25px;
+                height: 25px;
+                margin-right: 8px;
+            } 
         }
     }
     .roundContainer__borderHorizont{

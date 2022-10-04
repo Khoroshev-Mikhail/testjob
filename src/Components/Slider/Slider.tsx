@@ -10,7 +10,7 @@ import css from './slider.module.scss'
 import { useEffect, useId, useState } from 'react';
 import { getCurrentIndex, getData } from '../RoundSlider/roundSlice';
 
-export default function SliderS(){
+export default function Slider(){
     const id = useId()
     const data = useAppSelector(getData)
     const index = useAppSelector(getCurrentIndex)
@@ -32,7 +32,10 @@ export default function SliderS(){
         }
     }, [clientWidth])
     useEffect(()=>{
-        document.querySelector('.swiper-button-next')?.classList.add(css.circle)
+        //document.querySelector('.swiper-button-prev')?.classList.add(css.circle)
+        //document.querySelector('.swiper-button-next')?.classList.add(css.circle)
+        //document.querySelector('.swiper-button-prev')?.classList.add(css.left)
+        //document.querySelector('.swiper-button-next')?.classList.add(css.right)
         window.addEventListener('resize', resize)
         return () =>{
             window.removeEventListener('resize', resize)
@@ -46,13 +49,18 @@ export default function SliderS(){
                     display: none;
                 }
                 `}
-            </style>
+            </style>            
+            <div className={css.swiperNav}>
+                <div className={`${css.circle} ${css.left}`}>{`<`}</div>
+                <div className={`${css.circle} ${css.right}`}>{`>`}</div>
+            </div>
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={40}
                 slidesPerView={slidersPerView}
-                navigation={true}
-                >
+                navigation={{nextEl: `.${css.left}`, prevEl: `.${css.right}`}}
+                pagination={clientWidth <= 580}
+            >
                 {data[index].slider.map((slide, i) => {
                     return (
                         <SwiperSlide className={css.slide} key={id+i}>
@@ -62,6 +70,7 @@ export default function SliderS(){
                     )
                 })}
             </Swiper>
+
         </div>
     )
 }

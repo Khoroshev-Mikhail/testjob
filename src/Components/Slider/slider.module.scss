@@ -1,3 +1,6 @@
+$large: 1100px;
+$medium: 980px;
+$small: 700px;
 $micro: 580px;
 .sliderContainer{
     margin: 0px 80px 0px 80px;
@@ -28,13 +31,36 @@ $micro: 580px;
     display: none;
 }
 .circle{
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     font-size: 20px;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     -khtml-border-radius: 50%;
-    border: 1px solid rgba(66, 87, 122, 0.2);
     background-color: #ffffff;
+    font-size: 25px;
+    line-height: 45px;
+    color: #3877EE;
+}
+.swiperNav{
+    width: 100%;
+    position: relative;
+    @media (max-width: $micro) {
+        display: none;
+    }
+}
+    .left{
+        top: 60px;
+        left: -60px;
+        position: absolute;
+        @media (max-width: $micro) {
+            margin: 0px;
+        }
+    }
+    .right{
+        top: 60px;
+        right: -60px;
+        position: absolute;
+        z-index: 999;
 }
