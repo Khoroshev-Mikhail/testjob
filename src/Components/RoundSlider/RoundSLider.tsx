@@ -5,12 +5,13 @@ import { getCurrentIndex, getData, next, prev, setIndex } from './roundSlice';
 import { useEffect, useId, useState } from 'react';
 
 export default function RoundSlider(){
+    const dispatch = useAppDispatch()
     const id = useId()
     const data = useAppSelector(getData)
     const index = useAppSelector(getCurrentIndex)
-    const dispatch = useAppDispatch()
     const [start, setStart] = useState(data[index].start)
     const [end, setEnd] = useState(data[index].end)
+    console.log()
 
     function nextFn(){
         dispatch(next(data.length))
@@ -32,6 +33,11 @@ export default function RoundSlider(){
         gsap.to('#round', {rotation: getAngle(i)})
         gsap.to('.rotateText', {rotation: reverseRotate(getAngle(i))})
     }
+    /**
+     * 
+     * @param i 
+     * @returns возвращает строку в формате "+=Х", где Х угол на который должен вращаться #round 
+     */
     function getAngle(i: number){
         const count = 360 / data.length
         let left = 0;
@@ -46,16 +52,21 @@ export default function RoundSlider(){
         }
         return left >= right ? `+=${count * right}` : `-=${count * left}`
     }
+    /**
+     * 
+     * @param str строка "+=X" или "-=Х" которую возвращает функция getAngle
+     * @returns возвращает ту же строку только меняет + на - и наоборот
+     */
     function reverseRotate(str: string){
-        return str.at(0) === '+' ? ('-' + str.slice(1)) : ('+' + str.slice(1)) 
+        return str[0] === '+' ? ('-' + str.slice(1)) : ('+' + str.slice(1)) 
     }
-
     /**
      * Рекурсивная функция для плавной смены цифр даты за 333ms
      * @param current - текущая цифра
-     * @param finish - цифра в которую должна переписаться текущая | выход из рекурсии (базовый случай) 
+     * @param finish - значение к которому стремится текущая дата, так же это значение - это базовый случай рекурсии (выход)
      * @param delay - задержка в ms = 333ms / (current - finish) при первом вызове
-     * @param start - свитчер. Т.к. даты две и они хранятся в локальном стейте и при перезаписи используют разные функции
+     * @param start - свитчер. Т.к. даты = 2, они хранятся в локальном стейте и при перезаписи используют разные функции. Если 
+     * true (по умолчанию) значит записывает первую дату setStart, иначе setEnd
      * @returns 
      */
     function dateAnimate(current: number, finish: number, delay: number, start: boolean = true){
@@ -116,7 +127,7 @@ export default function RoundSlider(){
                 })}
             </div>
             <div className={css.roundContainer__borderHorizont}></div>
-            <div className={css.roundContainer__borderVertical} style={{height: document.documentElement.offsetHeight /* Добавить скролл динамически */}}></div>
+            <div className={css.roundContainer__borderVertical} style={{height: document.body.clientHeight /* Добавить скролл динамически */}}></div>
         </div>
     )
 }

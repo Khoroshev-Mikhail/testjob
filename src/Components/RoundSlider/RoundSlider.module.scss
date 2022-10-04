@@ -147,6 +147,7 @@ $micro: 580px;
             #EF5DA8(0, 0, 0, 0)
             ) 1 100%;
         -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#5D5FEF), to(#EF5DA8)) 0 0 0 100% stretch;
+        
         @media (max-width: $medium) {
             font-size: 45px;
             line-height: 45px;

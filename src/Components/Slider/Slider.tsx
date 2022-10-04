@@ -8,7 +8,7 @@ import { useAppSelector } from '../../app/hooks';
 
 import css from './slider.module.scss'
 import { useEffect, useId, useState } from 'react';
-import { getCurrentIndex, getData } from '../RoundSlider/roundSlice';
+import { getCurrentIndex, getData, SliderType } from '../RoundSlider/roundSlice';
 
 export default function Slider(){
     const id = useId()
@@ -32,10 +32,6 @@ export default function Slider(){
         }
     }, [clientWidth])
     useEffect(()=>{
-        //document.querySelector('.swiper-button-prev')?.classList.add(css.circle)
-        //document.querySelector('.swiper-button-next')?.classList.add(css.circle)
-        //document.querySelector('.swiper-button-prev')?.classList.add(css.left)
-        //document.querySelector('.swiper-button-next')?.classList.add(css.right)
         window.addEventListener('resize', resize)
         return () =>{
             window.removeEventListener('resize', resize)
@@ -58,10 +54,10 @@ export default function Slider(){
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={40}
                 slidesPerView={slidersPerView}
-                navigation={{nextEl: `.${css.left}`, prevEl: `.${css.right}`}}
+                navigation={{nextEl: `.${css.right}`, prevEl: `.${css.left}`}}
                 pagination={clientWidth <= 580}
             >
-                {data[index].slider.map((slide, i) => {
+                {data[index].slider.map((slide: SliderType, i) => {
                     return (
                         <SwiperSlide className={css.slide} key={id+i}>
                             <div className={css.header}>{slide.header}</div>
@@ -70,7 +66,6 @@ export default function Slider(){
                     )
                 })}
             </Swiper>
-
         </div>
     )
 }

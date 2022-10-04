@@ -1,7 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
+import { fetchData } from '../../app/dataAPI';
+import { RootState } from '../../app/store';
 
-const initialState = [
+export type SliderType = {
+    header: string,
+    description: string,
+}
+export type Data = {
+    start: number,
+    end: number,
+    miniHeader: string,
+    slider: SliderType[],
+}
+const initialState: Data[] = [
     {start: 1992, end: 1999, miniHeader: 'Наука1', slider: [
         {header: '1992', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
         {header: '1993', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
@@ -11,59 +22,46 @@ const initialState = [
         {header: '1997', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
         {header: '1998', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
         {header: '1999', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-    ]},
-    {start: 2000, end: 2005, miniHeader: 'Наука2', slider: [
-        {header: '2000', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2001', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2002', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2003', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2004', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2005', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-    ]},
-    {start: 2006, end: 2009, miniHeader: 'Наука3', slider: [
-        {header: '2006', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2007', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2009', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-    ]},
-    {start: 2010, end: 2013, miniHeader: '', slider: [
-        {header: '2010', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2011', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2012', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2013', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-    ]},
-    {start: 2014, end: 2022, miniHeader: 'Наука5', slider: [
-        {header: '2014', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2017', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2020', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-        {header: '2022', description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
-    ]},
+    ]}
 ]
+export const getAsyncData = createAsyncThunk(
+    'data/getAsyncData',
+    async () => {
+        const response = await fetchData();
+        return response
+    }
+);
 
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {},
+    extraReducers: (builder) =>{
+        builder.addCase(getAsyncData.fulfilled, (state, action: PayloadAction<Data[]>) => {
+            return action.payload
+        })
+    }
 })
 export const getData = (state: RootState) => state.data
 
-export const indexSlice = createSlice({ //Желательно получить data.length внутри reducer
+export const indexSlice = createSlice({ 
     name: 'index',
     initialState: 0,
     reducers: {
-        prev: (state, { payload }) => {
+        prev: (state, action: PayloadAction<number>) => {
             if(state === 0){
-                return payload - 1
+                return action.payload - 1 //Желательно получить data.length внутри reducer, а не через payload
             }
             return state - 1
         },
-        next: (state, { payload }) => {
-            if(state === payload - 1){
+        next: (state, action: PayloadAction<number>) => {
+            if(state === action.payload - 1){
                 return 0
             }
             return state + 1
         },
-        setIndex: (_, { payload }) => {
-            return payload
+        setIndex: (_, action: PayloadAction<number>) => {
+            return action.payload
         }
     },
 })
