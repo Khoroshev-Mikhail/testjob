@@ -43,6 +43,7 @@ export const dataSlice = createSlice({
     }
 })
 export const getData = (state: RootState) => state.data
+export const getMinAngle = (state: RootState) => 360 / state.data.length
 
 export const indexSlice = createSlice({ 
     name: 'index',

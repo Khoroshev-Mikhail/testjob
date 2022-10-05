@@ -43,7 +43,7 @@ $micro: 580px;
             line-height: 56px;
         } 
     }
-    .leftDate{
+    .roundContainer__leftDate{
         margin: 0px;
         padding: 0px;
         color: #5D5FEF;
@@ -56,7 +56,7 @@ $micro: 580px;
             text-align: left;
         } 
     }
-    .rightDate{
+    .roundContainer__rightDate{
         color: #EF5DA8;
         left: calc(50% + 50px);    
         @media (max-width: $medium) {
@@ -67,7 +67,7 @@ $micro: 580px;
             text-align: right;
         } 
     }
-    .miniHeader{
+    .roundContainer__miniHeader{
         position: absolute;
         left: calc(50% + $round / 4 + 70px);
         top: calc($roundTop + 35px);;

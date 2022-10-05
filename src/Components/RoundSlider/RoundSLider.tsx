@@ -1,7 +1,7 @@
 import css from './RoundSlider.module.scss'
 import gsap from 'gsap';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getCurrentIndex, getData, next, prev, setIndex } from './roundSlice';
+import { getCurrentIndex, getData, getMinAngle, next, prev, setIndex } from './roundSlice';
 import { useEffect, useId, useState } from 'react';
 
 export default function RoundSlider(){
@@ -9,18 +9,19 @@ export default function RoundSlider(){
     const id = useId()
     const data = useAppSelector(getData)
     const index = useAppSelector(getCurrentIndex)
+    const minAngle = useAppSelector(getMinAngle)
     const [start, setStart] = useState(data[index].start)
     const [end, setEnd] = useState(data[index].end)
 
     function nextFn(){
         dispatch(next(data.length))
-        gsap.to('#round', {rotation: `-=${360 / data.length}`})
-        gsap.to('.rotateText', {rotation:`+=${360 / data.length}`})
+        gsap.to('#round', {rotation: `-=${minAngle}`})
+        gsap.to('.rotateText', {rotation:`+=${minAngle}`})
     }
     function prevFn(){
         dispatch(prev(data.length))
-        gsap.to('#round', {rotation: `+=${360 / data.length}`})
-        gsap.to('.rotateText', {rotation:`-=${360 / data.length}`})
+        gsap.to('#round', {rotation: `+=${minAngle}`})
+        gsap.to('.rotateText', {rotation:`-=${minAngle}`})
     }
     /**
      * Функция для вращения #round на позицию где точка по которой был клик - будет на первой позиции. 
@@ -30,15 +31,14 @@ export default function RoundSlider(){
     function rotating(i: number){
         dispatch(setIndex(i))
         gsap.to('#round', {rotation: `+=${getAngle(i)}`})
-        gsap.to('.rotateText', {rotation: `+=${(-1)* getAngle(i)}`})
+        gsap.to('.rotateText', {rotation: `-=${getAngle(i)}`})
     }
     /**
-     * 
-     * @param i 
+     * Функция возвращает угол на который должен вращаться #round чтобы точка по которой был клик была перемещена на первую позицию
+     * @param i - индекс точки на окружности по которой был клик
      * @returns возвращает угол на который должен вращаться #round (значение может быть отрицательным)
      */
     function getAngle(i: number){
-        const count = 360 / data.length
         let left = 0;
         let right = 0;
         if(i > index){
@@ -49,7 +49,7 @@ export default function RoundSlider(){
             left = data.length - index + i
             right = index - i
         }
-        return left >= right ? (count * right) : (count * left) * (-1)
+        return left >= right ? (minAngle * right) : (- minAngle * left)
     }
     /**
      * Рекурсивная функция для плавной смены цифр даты за 333ms
@@ -71,12 +71,12 @@ export default function RoundSlider(){
             setTimeout(()=>{dateAnimate(current - 1, finish, delay, start)}, delay)
         }
     }
+    //При каждой смене индекса - запускаются функции которые плавно меняют цифры у дат
     useEffect(()=>{
         dateAnimate(start, data[index].start, 333 / Math.abs(start - data[index].start))
         dateAnimate(end, data[index].end, 333 / Math.abs(end - data[index].end), false)
-        gsap.fromTo('#miniHeader', {opacity: 0}, {opacity: 1, duration: 2})   
+        gsap.fromTo(`.${css.roundContainer__miniHeader}`, {opacity: 0}, {opacity: 1, duration: 2})   
     }, [index])
-
     return (
         <div className={css.roundContainer}>
             <div className={css.roundContainer__header}>Исторические<br/> даты</div>
@@ -87,12 +87,12 @@ export default function RoundSlider(){
                 <button className={`${css.circle}`} onClick={nextFn}>{`>`}</button>
             </div>
 
-            <div className={`${css.leftDate} ${css.date}`}>{start}</div>
-            <div className={`${css.rightDate} ${css.date}`}>{end}</div>
-            <div id="miniHeader" className={css.miniHeader}>{data[index].miniHeader}</div>
+            <div className={`${css.roundContainer__leftDate} ${css.date}`}>{start}</div>
+            <div className={`${css.roundContainer__rightDate} ${css.date}`}>{end}</div>
+            <div className={css.roundContainer__miniHeader}>{data[index].miniHeader}</div>
             
             <div className={`${css.roundContainer__round} ${css.circle} `} id="round">
-                {data.map((el, i, arr) => {
+                {data.map((_, i, arr) => {
                     return (
                         <div key={id + i}>
                             <div 
@@ -109,9 +109,9 @@ export default function RoundSlider(){
                                 }}
                                 onClick={()=>rotating(i)} 
                                 className={`${css.circle} ${ i === index ? css.activePoints : css.points}`} 
-                                style={{rotate: `${i * 360 / arr.length + 360 / arr.length / 2}deg`}}
+                                style={{rotate: `${i * minAngle + minAngle / 2}deg`}}
                             >
-                                <div className='rotateText' style={{rotate: `-${i * 360 / arr.length + 360 / arr.length / 2}deg`}}>{i + 1}</div>
+                                <div className='rotateText' style={{rotate: `-${i * minAngle + minAngle / 2}deg`}}>{i + 1}</div>
                             </div>
                         </div>
                     )
