@@ -11,7 +11,6 @@ export default function RoundSlider(){
     const index = useAppSelector(getCurrentIndex)
     const [start, setStart] = useState(data[index].start)
     const [end, setEnd] = useState(data[index].end)
-    console.log()
 
     function nextFn(){
         dispatch(next(data.length))
@@ -30,13 +29,13 @@ export default function RoundSlider(){
      */
     function rotating(i: number){
         dispatch(setIndex(i))
-        gsap.to('#round', {rotation: getAngle(i)})
-        gsap.to('.rotateText', {rotation: reverseRotate(getAngle(i))})
+        gsap.to('#round', {rotation: `+=${getAngle(i)}`})
+        gsap.to('.rotateText', {rotation: `+=${(-1)* getAngle(i)}`})
     }
     /**
      * 
      * @param i 
-     * @returns возвращает строку в формате "+=Х", где Х угол на который должен вращаться #round 
+     * @returns возвращает угол на который должен вращаться #round (значение может быть отрицательным)
      */
     function getAngle(i: number){
         const count = 360 / data.length
@@ -50,15 +49,7 @@ export default function RoundSlider(){
             left = data.length - index + i
             right = index - i
         }
-        return left >= right ? `+=${count * right}` : `-=${count * left}`
-    }
-    /**
-     * 
-     * @param str строка "+=X" или "-=Х" которую возвращает функция getAngle
-     * @returns возвращает ту же строку только меняет + на - и наоборот
-     */
-    function reverseRotate(str: string){
-        return str[0] === '+' ? ('-' + str.slice(1)) : ('+' + str.slice(1)) 
+        return left >= right ? (count * right) : (count * left) * (-1)
     }
     /**
      * Рекурсивная функция для плавной смены цифр даты за 333ms
