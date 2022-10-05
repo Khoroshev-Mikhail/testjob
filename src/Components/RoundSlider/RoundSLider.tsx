@@ -34,7 +34,7 @@ export default function RoundSlider(){
         gsap.to('.rotateText', {rotation: `-=${getAngle(i)}`})
     }
     /**
-     * Функция возвращает угол на который должен вращаться #round чтобы точка по которой был клик была перемещена на первую позицию
+     * Функция возвращает угол на который должен вращаться #round чтобы точка по которой был клик была перемещена на первую позицию по наименьшему пути
      * @param i - индекс точки на окружности по которой был клик
      * @returns возвращает угол на который должен вращаться #round (значение может быть отрицательным)
      */
@@ -92,7 +92,7 @@ export default function RoundSlider(){
             <div className={css.roundContainer__miniHeader}>{data[index].miniHeader}</div>
             
             <div className={`${css.roundContainer__round} ${css.circle} `} id="round">
-                {data.map((_, i, arr) => {
+                {data.map((_, i) => {
                     return (
                         <div key={id + i}>
                             <div 

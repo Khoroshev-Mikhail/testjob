@@ -13,13 +13,13 @@ $micro: 580px;
 .slide{
     text-align: left;
 }
-.header{
+.slide__header{
     font-size: 25px;
     font-weight: 400px;
     color: #3877EE;
     padding-bottom: 15px;
 }
-.description{
+.slide__description{
     font-size: 20px;
     height: auto;
     @media (max-width: $micro) {
@@ -49,7 +49,6 @@ $micro: 580px;
     @media (max-width: $micro) {
         display: none;
     }
-}
     .left{
         top: 60px;
         left: -60px;
@@ -63,4 +62,5 @@ $micro: 580px;
         right: -60px;
         position: absolute;
         z-index: 999;
+    }
 }

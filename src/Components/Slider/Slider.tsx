@@ -60,8 +60,8 @@ export default function Slider(){
                 {data[index].slider.map((slide: SliderType, i) => {
                     return (
                         <SwiperSlide className={css.slide} key={id+i}>
-                            <div className={css.header}>{slide.header}</div>
-                            <div className={css.description} style={{height}}>{slide.description}</div>
+                            <div className={css.slide__header}>{slide.header}</div>
+                            <div className={css.slide__description} style={{height}}>{slide.description}</div>
                         </SwiperSlide>
                     )
                 })}
