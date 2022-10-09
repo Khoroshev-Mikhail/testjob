@@ -13,16 +13,14 @@ export default function RoundSlider(){
     const minAngle = useAppSelector(getMinAngle)
     const [start, setStart] = useState(data[index].start)
     const [end, setEnd] = useState(data[index].end)
-    const [buttonsDisabled, setButtonsDisabled] = useState(false)
 
     const duration = 0.5
 
     function rotate(angle: number, duration: number = 0.333){
-        setButtonsDisabled(true)
         gsap.to('#round', {rotation: `-=${angle}`, duration})
         gsap.to('.rotateText', {rotation:`+=${angle}`, duration})
-        gsap.fromTo(`#slider`, {opacity: 0}, {opacity: 1, duration, delay: duration})
-        setTimeout(()=>{setButtonsDisabled(false)}, duration * 2000)  
+        gsap.to(`#slider`, {opacity: 0})
+        gsap.to(`#slider`, {opacity: 1, duration, delay: duration}) 
     }
     function nextFn(){
         dispatch(next(data.length))
@@ -91,8 +89,8 @@ export default function RoundSlider(){
 
             <div className={css.roundContainer__buttons}>
                 <div>0{index + 1}/0{data.length}</div>
-                <button className={`${css.circle}`} onClick={prevFn} disabled={buttonsDisabled}></button>
-                <button className={`${css.circle} ${css.flipIt}`} onClick={nextFn} disabled={buttonsDisabled}></button>
+                <button className={`${css.circle}`} onClick={prevFn}></button>
+                <button className={`${css.circle} ${css.flipIt}`} onClick={nextFn}></button>
             </div>
 
             <div className={`${css.roundContainer__leftDate} ${css.date}`}>{start}</div>
