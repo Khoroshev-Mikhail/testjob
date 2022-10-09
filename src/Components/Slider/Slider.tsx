@@ -38,7 +38,7 @@ export default function Slider(){
         }
     }, [])
     return(
-        <div className={css.sliderContainer}>
+        <div className={css.sliderContainer} id="slider">
             <style>
                 {`
                 .swiper-button-disabled{

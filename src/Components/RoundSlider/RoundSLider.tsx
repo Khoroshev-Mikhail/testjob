@@ -1,4 +1,4 @@
-import css from './RoundSlider.module.scss'
+import css from './roundSlider.module.scss'
 import gsap from 'gsap';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getCurrentIndex, getData, getMinAngle, next, prev, setIndex } from './roundSlice';
@@ -13,16 +13,24 @@ export default function RoundSlider(){
     const minAngle = useAppSelector(getMinAngle)
     const [start, setStart] = useState(data[index].start)
     const [end, setEnd] = useState(data[index].end)
+    const [buttonsDisabled, setButtonsDisabled] = useState(false)
 
+    const duration = 0.5
+
+    function rotate(angle: number, duration: number = 0.333){
+        setButtonsDisabled(true)
+        gsap.to('#round', {rotation: `-=${angle}`, duration})
+        gsap.to('.rotateText', {rotation:`+=${angle}`, duration})
+        gsap.fromTo(`#slider`, {opacity: 0}, {opacity: 1, duration, delay: duration})
+        setTimeout(()=>{setButtonsDisabled(false)}, duration * 2000)  
+    }
     function nextFn(){
         dispatch(next(data.length))
-        gsap.to('#round', {rotation: `-=${minAngle}`})
-        gsap.to('.rotateText', {rotation:`+=${minAngle}`})
+        rotate(minAngle, duration) 
     }
     function prevFn(){
         dispatch(prev(data.length))
-        gsap.to('#round', {rotation: `+=${minAngle}`})
-        gsap.to('.rotateText', {rotation:`-=${minAngle}`})
+        rotate(- minAngle, duration) 
     }
     /**
      * Функция для вращения #round на позицию где точка по которой был клик - будет на первой позиции. 
@@ -31,8 +39,7 @@ export default function RoundSlider(){
      */
     function rotating(i: number){
         dispatch(setIndex(i))
-        gsap.to('#round', {rotation: `+=${getAngle(i)}`})
-        gsap.to('.rotateText', {rotation: `-=${getAngle(i)}`})
+        rotate(- getAngle(i), duration) 
     }
     /**
      * Функция возвращает угол на который должен вращаться #round чтобы точка по которой был клик была перемещена на первую позицию по наименьшему пути
@@ -74,8 +81,8 @@ export default function RoundSlider(){
     }
     //При каждой смене индекса - запускаются функции которые плавно меняют цифры у дат
     useEffect(()=>{
-        dateAnimate(start, data[index].start, 333 / Math.abs(start - data[index].start))
-        dateAnimate(end, data[index].end, 333 / Math.abs(end - data[index].end), false)
+        dateAnimate(start, data[index].start, duration * 1000 / Math.abs(start - data[index].start))
+        dateAnimate(end, data[index].end, duration * 1000 / Math.abs(end - data[index].end), false)
         gsap.fromTo(`.${css.roundContainer__round__miniHeader}`, {opacity: 0}, {opacity: 1, duration: 1})   
     }, [index])
     return (
@@ -84,8 +91,8 @@ export default function RoundSlider(){
 
             <div className={css.roundContainer__buttons}>
                 <div>0{index + 1}/0{data.length}</div>
-                <button className={`${css.circle}`} onClick={prevFn}></button>
-                <button className={`${css.circle} ${css.flipIt}`} onClick={nextFn}></button>
+                <button className={`${css.circle}`} onClick={prevFn} disabled={buttonsDisabled}></button>
+                <button className={`${css.circle} ${css.flipIt}`} onClick={nextFn} disabled={buttonsDisabled}></button>
             </div>
 
             <div className={`${css.roundContainer__leftDate} ${css.date}`}>{start}</div>
