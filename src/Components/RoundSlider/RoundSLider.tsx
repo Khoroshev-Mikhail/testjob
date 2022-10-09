@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getCurrentIndex, getData, getMinAngle, next, prev, setIndex } from './roundSlice';
 import { useEffect, useId, useState } from 'react';
+import Crosshair from '../Сrosshair/Crosshair';
 
 export default function RoundSlider(){
     const dispatch = useAppDispatch()
@@ -75,7 +76,7 @@ export default function RoundSlider(){
     useEffect(()=>{
         dateAnimate(start, data[index].start, 333 / Math.abs(start - data[index].start))
         dateAnimate(end, data[index].end, 333 / Math.abs(end - data[index].end), false)
-        gsap.fromTo(`.${css.roundContainer__miniHeader}`, {opacity: 0}, {opacity: 1, duration: 2})   
+        gsap.fromTo(`.${css.roundContainer__round__miniHeader}`, {opacity: 0}, {opacity: 1, duration: 1})   
     }, [index])
     return (
         <div className={css.roundContainer}>
@@ -83,42 +84,29 @@ export default function RoundSlider(){
 
             <div className={css.roundContainer__buttons}>
                 <div>0{index + 1}/0{data.length}</div>
-                <button className={`${css.circle}`} onClick={prevFn}>{`<`}</button>
-                <button className={`${css.circle}`} onClick={nextFn}>{`>`}</button>
+                <button className={`${css.circle}`} onClick={prevFn}></button>
+                <button className={`${css.circle} ${css.flipIt}`} onClick={nextFn}></button>
             </div>
 
             <div className={`${css.roundContainer__leftDate} ${css.date}`}>{start}</div>
             <div className={`${css.roundContainer__rightDate} ${css.date}`}>{end}</div>
-            <div className={css.roundContainer__miniHeader}>{data[index].miniHeader}</div>
+            
             
             <div className={`${css.roundContainer__round} ${css.circle} `} id="round">
                 {data.map((_, i) => {
                     return (
                         <div key={id + i}>
-                            <div 
-                                id={`point${i}`} 
-                                onMouseOver={()=>{
-                                    document.getElementById(`point${i}`)?.classList.add(css.activePoints)
-                                    document.getElementById(`point${i}`)?.classList.remove(css.points)
-                                }} 
-                                onMouseLeave={()=>{
-                                    if(i !== index){
-                                        document.getElementById(`point${i}`)?.classList.add(css.points)
-                                        document.getElementById(`point${i}`)?.classList.remove(css.activePoints)
-                                    }
-                                }}
-                                onClick={()=>rotating(i)} 
-                                className={`${css.circle} ${ i === index ? css.activePoints : css.points}`} 
-                                style={{rotate: `${i * minAngle + minAngle / 2}deg`}}
-                            >
-                                <div className='rotateText' style={{rotate: `-${i * minAngle + minAngle / 2}deg`}}>{i + 1}</div>
+                            <div onClick={()=>rotating(i)} className={`${css.circle} ${ i === index ? css.activePoints : css.points}`} style={{rotate: `${i * minAngle + minAngle / 2}deg`}} >
+                                <div className='rotateText' style={{rotate: `-${i * minAngle + minAngle / 2}deg`}}>
+                                    {i + 1}
+                                    {i === index && <div className={`rotateText ${css.roundContainer__round__miniHeader}`}>{data[index].miniHeader}</div>}
+                                </div>
                             </div>
                         </div>
                     )
                 })}
             </div>
-            <div className={css.roundContainer__borderHorizont}></div>
-            <div className={css.roundContainer__borderVertical} style={{height: document.body.clientHeight /* Добавить скролл динамически */}}></div>
-        </div>
+            <Crosshair />
+            </div>
     )
 }

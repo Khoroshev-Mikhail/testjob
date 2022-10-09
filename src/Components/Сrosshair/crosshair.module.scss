@@ -1,0 +1,35 @@
+$round: 530px;
+$roundTop: 215px;
+
+$large: 1100px;
+$medium: 980px;
+$small: 700px;
+$micro: 580px;
+
+.borderHorizont{
+    z-index: 2;
+    position: absolute;
+    box-sizing: border-box;  
+    width: 100%;
+    height: 1px;
+    left: 0px;
+    top: calc($round / 2 + $roundTop);
+    border-bottom: 1px solid rgba(66, 87, 122, 0.2);
+    @media (max-width: $micro) {
+        top: 293px;
+    } 
+}
+.borderVertical{
+    z-index: 2;
+    box-sizing: border-box;  
+    position: absolute;
+    left: calc(50% - 0.5px);
+    top: 0px;
+    width: 1px;
+    min-height: calc($round + $roundTop + 96px);
+    height: 100%;
+    border-right: 1px solid rgba(66, 87, 122, 0.2);
+    @media (max-width: $micro) {
+        display: none;
+    } 
+}

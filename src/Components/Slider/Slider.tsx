@@ -44,18 +44,34 @@ export default function Slider(){
                 .swiper-button-disabled{
                     display: none;
                 }
+                .swiper-pagination{
+                    bottom: 32px !important;
+                }
+                .swiper-pagination-bullet-active{
+                    background-color: #42567A;;
+                }
                 `}
             </style>            
             <div className={css.swiperNav}>
-                <div className={`${css.circle} ${css.left}`}>{`<`}</div>
-                <div className={`${css.circle} ${css.right}`}>{`>`}</div>
+                <div className={`${css.circle} ${css.left}`}></div>
+                <div className={`${css.circle} ${css.right}`}></div>
             </div>
+            {clientWidth <= 580 && <div className="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
+                <span className="swiper-pagination-bullet swiper-pagination-bullet-active" aria-current="true"></span>
+                <span className="swiper-pagination-bullet"></span>
+                <span className="swiper-pagination-bullet"></span>
+                <span className="swiper-pagination-bullet"></span>
+                <span className="swiper-pagination-bullet"></span>
+                <span className="swiper-pagination-bullet"></span>
+                <span className="swiper-pagination-bullet"></span>
+            </div>}
+
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={40}
                 slidesPerView={slidersPerView}
                 navigation={{nextEl: `.${css.right}`, prevEl: `.${css.left}`}}
-                pagination={clientWidth <= 580}
+                pagination={{el: '.swiper-pagination', type: 'bullets'}}
             >
                 {data[index].slider.map((slide: SliderType, i) => {
                     return (

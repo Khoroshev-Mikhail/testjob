@@ -37,7 +37,7 @@ export const dataSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(getAsyncData.fulfilled, (state, action: PayloadAction<Data[]>) => {
+        builder.addCase(getAsyncData.fulfilled, (_, action: PayloadAction<Data[]>) => {
             return action.payload
         })
     }
