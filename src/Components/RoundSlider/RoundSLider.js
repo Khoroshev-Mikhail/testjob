@@ -1,4 +1,4 @@
-import css from './roundSlider.module.scss'
+import css from './RoundSlider.module.scss'
 import gsap from 'gsap';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getCurrentIndex, getData, getMinAngle, next, prev, setIndex } from './roundSlice';
@@ -16,7 +16,7 @@ export default function RoundSlider(){
 
     const duration = 0.5
 
-    function rotate(angle: number, duration: number = 0.333){
+    function rotate(angle, duration = 0.333){
         gsap.to('#round', {rotation: `-=${angle}`, duration})
         gsap.to('.rotateText', {rotation:`+=${angle}`, duration})
         gsap.to(`#slider`, {opacity: 0})
@@ -35,7 +35,7 @@ export default function RoundSlider(){
      * Функция вращает #round в лево или право по наименьшему пути
      * @param i - индекс точки на окружности по которой был клик.
      */
-    function rotating(i: number){
+    function rotating(i){
         dispatch(setIndex(i))
         rotate(- getAngle(i), duration) 
     }
@@ -44,7 +44,7 @@ export default function RoundSlider(){
      * @param i - индекс точки на окружности по которой был клик
      * @returns возвращает угол на который должен вращаться #round (значение может быть отрицательным)
      */
-    function getAngle(i: number){
+    function getAngle(i){
         let left = 0;
         let right = 0;
         if(i > index){
@@ -66,7 +66,7 @@ export default function RoundSlider(){
      * true (по умолчанию) значит записывает первую дату setStart, иначе setEnd
      * @returns 
      */
-    function dateAnimate(current: number, finish: number, delay: number, start: boolean = true){
+    function dateAnimate(current, finish, delay, start = true){
         if(current === finish) return current
         if(current < finish){
             start ? setStart(current + 1) : setEnd(current + 1)
